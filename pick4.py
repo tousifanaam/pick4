@@ -22,7 +22,7 @@ def box(draw_pick: tuple, pick: tuple):
     """
     All four digits must match the digits drawn in any order
     """
-    return len([i for i in pick if i in draw_pick]) == 4 and len([i for i in draw_pick if i in pick]) == 4
+    return set(draw_pick) == set(pick)
 
 
 def four_way_box(draw_pick: tuple, pick: tuple):
