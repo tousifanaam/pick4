@@ -30,7 +30,7 @@ def four_way_box(draw_pick: tuple, pick: tuple):
     All four digits must match the digits drawn in any order, 
     where three of the digits are the same
     """
-    if 3 in [draw_pick.count(i) for i in draw_pick[:-2]]:
+    if 3 in [draw_pick.count(i) for i in draw_pick[:-2]] or len(set(draw_pick)) == 4:
         return box(draw_pick=draw_pick, pick=pick)
     return False
 
