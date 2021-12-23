@@ -2,6 +2,26 @@ from random import randint
 from typing import Iterable
 
 
+def arg_check(func):
+
+    def wrapper(*args, **kwargs):
+
+        if len(args) == 2:
+            if not isinstance(args[0], tuple):
+                args[0] = tuple(args[0])
+            if not isinstance(args[1], tuple):
+                args[1] = tuple(args[1])
+            foo1 = [i for i in args[0] if not isinstance(i, int)]
+            foo2 = [i for i in args[1] if not isinstance(i, int)]
+            if len(foo1) != 0 or len(foo2) != 0:
+                raise ValueError(
+                    f"invalid literal for int() with base 10: {', '.join(foo1 + foo2)}")
+
+        return func(*args, **kwargs)
+
+    return wrapper
+
+
 def pick(n: int = 9, start: int = 0, total_pick: int = 4):
     """
     default> start value: 0 (included)
@@ -11,6 +31,7 @@ def pick(n: int = 9, start: int = 0, total_pick: int = 4):
     return tuple([randint(start, n) for _ in range(total_pick)])
 
 
+@arg_check
 def straight(draw_pick: tuple, pick: tuple):
     """
     All four digits must match the digits drawn in the exact same order
@@ -18,6 +39,7 @@ def straight(draw_pick: tuple, pick: tuple):
     return pick == draw_pick
 
 
+@arg_check
 def box(draw_pick: tuple, pick: tuple):
     """
     All four digits must match the digits drawn in any order
@@ -25,6 +47,7 @@ def box(draw_pick: tuple, pick: tuple):
     return set(draw_pick) == set(pick)
 
 
+@arg_check
 def four_way_box(draw_pick: tuple, pick: tuple):
     """
     All four digits must match the digits drawn in any order, 
@@ -35,6 +58,7 @@ def four_way_box(draw_pick: tuple, pick: tuple):
     return False
 
 
+@arg_check
 def six_way_box(draw_pick: tuple, pick: tuple):
     """
     All four digits must match the digits drawn in any order, 
@@ -45,6 +69,7 @@ def six_way_box(draw_pick: tuple, pick: tuple):
     return False
 
 
+@arg_check
 def twelve_way_box(draw_pick: tuple, pick: tuple):
     """
     All four digits must match the digits drawn in any order, 
@@ -55,6 +80,7 @@ def twelve_way_box(draw_pick: tuple, pick: tuple):
     return False
 
 
+@arg_check
 def twenty_four_way_box(draw_pick: tuple, pick: tuple):
     """
     All four digits must match the digits drawn in any order, 
